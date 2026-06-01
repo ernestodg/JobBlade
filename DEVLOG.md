@@ -1,6 +1,31 @@
 # DEVLOG
 
 ## 2026-06-01
+- Added a comprehensive root README with project positioning, architecture flow, design principles, profile model, evaluation model, and roadmap for fast project understanding.
+- UI fix: aligned report button base sizing (padding, border radius, font size, min height, centered label) with primary action buttons so pre-analysis and post-analysis layouts match.
+- UI polish: disabled report buttons now keep the same visual styling as enabled state to avoid washed-out appearance before analysis runs.
+- Styling update: gave report action buttons a contrasting warm gradient theme with hover/active polish for clearer visual distinction from primary actions.
+- UI layout tweak: moved `Open Analysis Report` and `Open Cover Letter Report` buttons directly above result boxes and forced a horizontal one-line layout.
+- Added professional reporting UX: structured analysis summary cards, dedicated cover-letter summary, and modal report views via `Open Analysis Report` and `Open Cover Letter Report` buttons.
+- UX copy tweak: simplified Profile/Resume mode info text to compact neutral labels (Auto/Manual -> selected track) to avoid confusion with warnings/errors.
+- UI behavior update: split informational profile/resume mode messages into a dedicated Info area and reserved Warnings area for actual sanity/validation alerts only.
+- Hotfix: removed the company-reference sanity warning from result checks because it generated false positives on valid structured outputs.
+- Added `Auto (vacancy-based)` mode to the resume selector and implemented runtime resume auto-resolution across BI, Data, Business, and AI Automation variants.
+- Added a new selectable resume variant `ai_automation_software.md` and included it in the panel resume dropdown.
+- Added visible unified `Candidate profile` selector in the panel with `Auto`, `BI/Business Analysis`, and `AI Automation/Software` modes.
+- Added second profile JSON for AI-assisted software development/automation track and wired automatic profile switching from vacancy keywords.
+- Added explicit evaluation warning to prevent confusion between applied AI automation experience and academic/PhD-level ML research.
+- Hotfix: reduced extraction warning noise by treating null/missing skill booleans as quiet defaults and reserving coercion warnings for hard-rejection fields.
+- Hotfix: added automatic panel recovery for "Extension context invalidated" by requesting parent bridge reset and remounting a fresh iframe panel.
+- Hotfix: added schema normalization for extracted facts so missing/loose boolean fields no longer crash validation; invalid values are coerced with warnings.
+- Implemented Strict Two-Step Job Evaluation: extraction -> local validation/evidence gate -> evaluation.
+- Added strict JSON fact extraction prompt and parser with failure blocking for invalid extraction output.
+- Added local fact validation checks (types, required schema behavior, empty title/company warnings, country-missing warning).
+- Added evidence gate so hard rejection booleans are disabled when evidence strings are missing.
+- Replaced evaluation prompt with evidence-first structured format and removed automatic cover letter generation from standard analysis.
+- Added manual `Generate Cover Letter` action that requires extracted company and job title.
+- Added debug section to display extracted facts and sanity warnings for result contamination (Danish/Copenhagen/company mismatch).
+- Added configurable Ollama call path in the background worker with low-temperature settings per call type.
 - Created the JobBlade MVP scaffold under `jobblade/`.
 - Added the candidate profile JSON and three resume variants.
 - Added popup, content script, manifest, and styling for the local Ollama vacancy analysis flow.

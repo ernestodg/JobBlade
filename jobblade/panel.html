@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="panel.css?v=2026-06-01-5" />
+  <link rel="stylesheet" href="panel.css?v=2026-06-01-12" />
 </head>
 <body>
   <div class="jb-shell">
@@ -21,22 +21,59 @@
 
     <p class="jb-subtitle">Analyze the job you’re viewing without losing the verdict. The result stays here until you close the panel.</p>
 
+    <label class="jb-label" for="profileSelect">Candidate profile</label>
+    <select id="profileSelect" class="jb-select">
+      <option value="auto">Auto (vacancy-based)</option>
+      <option value="default">BI / Business Analysis Track</option>
+      <option value="ai_automation">AI Automation / Software Track</option>
+    </select>
+
     <label class="jb-label" for="resumeSelect">Resume profile</label>
     <select id="resumeSelect" class="jb-select">
+      <option value="auto">Auto (vacancy-based)</option>
       <option value="business_analyst.md">Business Analyst</option>
       <option value="data_analyst.md">Data Analyst</option>
       <option value="bi_analyst.md">BI Analyst</option>
+      <option value="ai_automation_software.md">AI Automation & Software Systems</option>
     </select>
 
     <label class="jb-label" for="modelInput">Ollama model</label>
     <input id="modelInput" class="jb-input" value="qwen2.5:7b" />
 
     <button type="button" id="analyzeBtn" class="jb-primary">Analyze selected vacancy</button>
+    <button type="button" id="coverLetterBtn" class="jb-primary">Generate Cover Letter</button>
 
+    <details>
+      <summary>Show Extracted Facts</summary>
+      <pre id="debugFacts" class="jb-result">No extracted facts yet.</pre>
+    </details>
+
+    <div id="info" class="jb-status" aria-live="polite"></div>
     <div id="status" class="jb-status" aria-live="polite"></div>
+    <div id="warnings" class="jb-status" aria-live="polite"></div>
+
+    <div class="jb-action-row">
+      <button type="button" id="openAnalysisReportBtn" class="jb-secondary" disabled>Open Analysis Report</button>
+      <button type="button" id="openCoverLetterReportBtn" class="jb-secondary" disabled>Open Cover Letter Report</button>
+    </div>
+
+    <div id="analysisSummary" class="jb-summary jb-hidden"></div>
+    <div id="coverLetterSummary" class="jb-summary jb-hidden"></div>
+
     <pre id="result" class="jb-result"></pre>
+    <pre id="coverLetterResult" class="jb-result"></pre>
   </div>
 
-  <script src="panel.js?v=2026-06-01-5"></script>
+  <div id="reportModal" class="jb-modal jb-hidden" role="dialog" aria-modal="true" aria-labelledby="reportModalTitle">
+    <div class="jb-modal-card">
+      <div class="jb-modal-header">
+        <h2 id="reportModalTitle">Report</h2>
+        <button type="button" id="closeModalBtn" class="jb-close" aria-label="Close report">×</button>
+      </div>
+      <div id="reportModalBody" class="jb-modal-body"></div>
+    </div>
+  </div>
+
+  <script src="panel.js?v=2026-06-01-12"></script>
 </body>
 </html>

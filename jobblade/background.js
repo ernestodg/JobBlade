@@ -4,7 +4,7 @@ chrome.action.onClicked.addListener(async (tab) => {
   }
 
   try {
-    const assetVersion = "2026-06-01-5";
+    const assetVersion = "2026-06-01-12";
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       world: "MAIN",
@@ -105,6 +105,14 @@ function injectOrToggleJobBladePanel(panelUrl, version) {
     if (event.data.type === "JOBBLADE_CLOSE_PANEL") {
       host.style.display = "none";
     }
+
+    if (event.data.type === "JOBBLADE_RESET_PANEL") {
+      const bridge = window.__jobbladePageBridge;
+      if (bridge && typeof bridge.cleanup === "function") {
+        bridge.cleanup();
+      }
+      injectOrToggleJobBladePanel(panelUrl, version);
+    }
   };
 
   window.addEventListener("message", handleMessage);
@@ -122,20 +130,42 @@ function injectOrToggleJobBladePanel(panelUrl, version) {
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request?.type !== "JOBBLADE_ANALYZE") {
+  if (request?.type !== "JOBBLADE_OLLAMA_CALL" && request?.type !== "JOBBLADE_ANALYZE") {
     return;
   }
 
-  analyzeWithOllama(request)
+  callOllama(request)
     .then((payload) => sendResponse({ ok: true, payload }))
     .catch((error) => sendResponse({ ok: false, error: error.message }));
 
   return true;
 });
 
-async function analyzeWithOllama(request) {
+async function callOllama(request) {
   let ollamaResponse;
   let lastFetchError = null;
+
+  const requestBody = {
+    model: request.model,
+    stream: request.stream === true,
+    options: {
+      temperature: typeof request.temperature === "number" ? request.temperature : 0.1
+    }
+  };
+
+  if (typeof request.systemPrompt === "string" && request.systemPrompt.trim()) {
+    requestBody.system = request.systemPrompt;
+  }
+
+  if (typeof request.userPrompt === "string" && request.userPrompt.trim()) {
+    requestBody.prompt = request.userPrompt;
+  } else if (typeof request.prompt === "string" && request.prompt.trim()) {
+    requestBody.prompt = request.prompt;
+  }
+
+  if (!requestBody.prompt) {
+    throw new Error("Missing prompt for Ollama request.");
+  }
 
   for (const baseUrl of ["http://127.0.0.1:11434", "http://localhost:11434"]) {
     try {
@@ -144,14 +174,7 @@ async function analyzeWithOllama(request) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          model: request.model,
-          prompt: request.prompt,
-          stream: false,
-          options: {
-            temperature: 0.2
-          }
-        })
+        body: JSON.stringify(requestBody)
       });
       break;
     } catch (error) {

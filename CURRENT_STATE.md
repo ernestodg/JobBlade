@@ -1,22 +1,29 @@
 # CURRENT_STATE
 
+- Root README now documents JobBlade purpose, principles, architecture, differentiation, profile tracks, and roadmap in professional project format.
 - Workspace now contains the `JobBlade` Chrome extension MVP scaffold.
-- The extension captures selected page text, loads local candidate profile/resume data, and sends a prompt to Ollama at `http://localhost:11434`.
-- MVP supports three resume variants: Business Analyst, Data Analyst, and BI Analyst.
-- The popup now defaults to `llama3.1:latest` as the recommended model for vacancy evaluation.
-- The popup uses a selection fallback that is compatible with `chrome.scripting.executeScript`.
-- The extension now falls back to extracting vacancy text from common LinkedIn page containers when the live selection is too short.
-- A 403 from Ollama is now surfaced as a likely browser-origin rejection that needs Ollama origin configuration.
-- The content script no longer writes selection state to `chrome.storage.session`, which avoids extension-context invalidation errors.
-- The content script now guards LinkedIn DOM reads with try/catch so page mutations do not surface as uncaught extension errors.
-- The extension no longer uses a persistent content script; the popup reads page text on demand with one-shot injection only.
-- The browser action now opens a persistent in-page JobBlade panel with analysis controls and a result area that stays visible until closed.
-- The current runtime path does not use content-script messaging; the toolbar click injects the page panel script directly each time.
-- The page panel sends analysis requests to the background service worker, which calls Ollama with extension permissions instead of page-context fetch.
-- The background worker now targets Ollama via `http://127.0.0.1:11434` and the page panel forces a white title plus dark text for the resume select.
-- The in-page panel now renders inside a Shadow DOM for style isolation, and `qwen2.5:7b` is the default model because it succeeds on the local machine.
-- Injecting the extension button now replaces older in-page JobBlade copies using a versioned cleanup hook, which prevents stale fetch and styling behavior after updates.
-- The toolbar click now injects a lightweight main-world bridge that mounts an extension iframe panel (`panel.html`), so UI and Ollama calls run in extension context rather than an unstable injected content-script context.
-- The current panel visual style is light-theme with blue accents, preserving the same interaction flow and controls.
-- Panel asset URLs now include a version fingerprint to avoid stale iframe CSS/JS caching after UI changes.
-- No Git repository is present in this workspace.
+- The browser action injects a persistent in-page host with an extension iframe panel (`panel.html`) and a page bridge for vacancy text capture.
+- Analysis now uses a strict two-step flow: `extractJobFacts(vacancyText)` then `evaluateJob(profile, resume, vacancyText, jobFacts)`.
+- Fact extraction is isolated with a parser-only prompt and JSON-only response expectations.
+- Local validation now blocks evaluation on extraction/schema failures and warns on missing title/company/country inconsistencies.
+- Extracted fact payloads are normalized to the required schema before validation so omitted boolean keys default safely instead of failing the run.
+- Evidence gate is enforced locally before evaluation: no hard-rejection flag can stay true without evidence text.
+- JobBlade now supports two candidate profiles and auto-selects the AI automation/software profile when vacancy text includes AI tools, automation, software/internal tools, agent/LLM/Copilot/Ollama, workflow systems, or technical business analysis signals.
+- The panel now exposes profile selection directly with `Auto`, `BI/Business Analysis`, and `AI Automation/Software` modes so profiles are unified in the UI.
+- Resume selection now includes a dedicated `AI Automation & Software Systems` resume variant alongside Business Analyst, Data Analyst, and BI Analyst options.
+- Resume selection now supports `Auto (vacancy-based)` mode; auto picks AI resume for AI profile track, otherwise chooses BI/Data/Business resume based on vacancy keywords with Business Analyst fallback.
+- Evaluation prompt now forbids prior-vacancy contamination and requires evidence-backed red flags in a fixed structured output.
+- Automatic cover letter output was removed from normal analysis.
+- Cover letters are generated only through the `Generate Cover Letter` action and require extracted company + job title.
+- A debug section now shows extracted facts JSON in the panel for immediate inspection.
+- Local sanity checks now warn for Danish/Copenhagen contamination mismatches; company-reference warning was removed to avoid false positives.
+- Panel messaging now separates informational profile/resume mode notices from true warnings (sanity/validation issues).
+- Info labels for profile/resume mode are now concise (Auto/Manual -> selected track) to avoid looking like errors.
+- Analysis output is now rendered as structured report cards in-panel (verdict, score, matches, red flags, probabilities) with modal drill-down for full formatted reports.
+- Cover-letter output now has a structured preview plus modal report view instead of relying on raw text blocks.
+- Report action buttons are positioned directly above result boxes and kept in a single horizontal row.
+- Report action buttons now use a contrasting warm gradient style with hover/active states for clearer visual separation from main analysis controls.
+- Report action buttons now keep a consistent visual style in both disabled and enabled states; disabled state only changes interaction behavior.
+- Report action buttons now share the same base sizing metrics as primary action buttons (padding, height, typography, radius) for consistent formatting.
+- Background Ollama calls now accept per-call prompts/settings and use low temperatures (0 for extraction, 0.1 for evaluation).
+- Panel runtime now detects extension-context invalidation/disconnect errors and requests automatic iframe panel reset to recover without manual page refresh.
