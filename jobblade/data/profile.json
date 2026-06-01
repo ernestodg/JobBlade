@@ -1,0 +1,132 @@
+{
+  "candidate_name": "Ernesto Diaz",
+  "target_identity": "Business Analyst, BI Analyst, Data Analyst, Information Management and Analytics professional",
+  "location": "Panama",
+  "open_to_relocation": true,
+  "priority_markets": ["Denmark", "Panama", "Remote LATAM", "Remote Europe"],
+  "languages": {
+    "spanish": "native",
+    "english": "fluent",
+    "danish": "not fluent"
+  },
+  "core_strengths": [
+    "Business analysis",
+    "Business intelligence",
+    "Power BI dashboards",
+    "SQL",
+    "Excel automation",
+    "CRM implementation",
+    "Data governance",
+    "KPI definition",
+    "Stakeholder management",
+    "Requirements gathering",
+    "Process improvement",
+    "Operational reporting",
+    "Information management",
+    "Cross-functional coordination",
+    "International operations"
+  ],
+  "technical_skills": [
+    "SQL",
+    "Power BI",
+    "Excel",
+    "Python",
+    "C#",
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "ArcGIS",
+    "QGIS",
+    "KoBoToolbox",
+    "ODK",
+    "Azure DevOps",
+    "Team Foundation Server",
+    "Dynamics CRM"
+  ],
+  "strongest_experience": [
+    {
+      "role": "Information Management Officer",
+      "company": "UNHCR",
+      "location": "Bogota, Colombia",
+      "themes": ["BI", "dashboards", "GIS", "data governance", "humanitarian reporting"]
+    },
+    {
+      "role": "Business Analyst",
+      "company": "UNHCR",
+      "location": "Copenhagen, Denmark",
+      "themes": ["CRM", "Power BI", "KPI definition", "stakeholder management", "digital transformation"]
+    },
+    {
+      "role": "Regional Information Management Officer",
+      "company": "UNHCR",
+      "location": "Buenos Aires, Argentina",
+      "themes": ["regional dashboards", "data standards", "multi-country reporting", "analytics"]
+    },
+    {
+      "role": "Information Management Officer",
+      "company": "UNHCR",
+      "location": "Tripoli, Libya",
+      "themes": ["data collection", "assessment tools", "reporting", "data harmonization"]
+    }
+  ],
+  "preferred_roles": [
+    "Business Analyst",
+    "Senior Business Analyst",
+    "Data Analyst",
+    "Business Data Analyst",
+    "BI Analyst",
+    "BI Developer",
+    "Analytics Engineer",
+    "Reporting Analyst",
+    "Data Governance Analyst",
+    "Analytics Consultant",
+    "Information Management Officer",
+    "CRM Analyst",
+    "Operations Analyst"
+  ],
+  "acceptable_roles": [
+    "Product Operations Analyst",
+    "Implementation Consultant",
+    "Solutions Consultant",
+    "Technical Project Coordinator",
+    "Technical Business Analyst",
+    "Digital Transformation Analyst"
+  ],
+  "avoid_roles": [
+    "Cloud Engineer",
+    "FinOps Engineer",
+    "Senior Data Engineer",
+    "Fabric Platform Engineer",
+    "Data Architect",
+    "MLOps Engineer",
+    "Quantitative Analyst",
+    "Marketing Attribution Analyst",
+    "Lead Marketing Analyst",
+    "Investment Analyst",
+    "Pure Product Manager",
+    "DevOps Engineer",
+    "SRE Engineer"
+  ],
+  "hard_rejection_rules": [
+    "Reject if Danish fluency is required.",
+    "Reject Denmark jobs if current Danish residency or existing work permit is required.",
+    "Reject Denmark jobs if relocation support is explicitly not offered.",
+    "Reject roles that are mainly cloud infrastructure, FinOps, DevOps, SRE, or platform engineering.",
+    "Reject roles that require deep specialized marketing analytics such as MMM, MTA, or incrementality testing.",
+    "Reject roles that are junior, graduate, or 0-2 years unless strategically exceptional.",
+    "Reject roles with salary below USD 50,000/year unless remote Panama-based and low stress."
+  ],
+  "salary_targets": {
+    "denmark_monthly_dkk_target": 60000,
+    "denmark_monthly_dkk_minimum": 50000,
+    "remote_monthly_usd_target": 7000,
+    "remote_monthly_usd_minimum": 4500,
+    "panama_monthly_usd_target": 4500,
+    "panama_monthly_usd_minimum": 3000
+  },
+  "decision_style": {
+    "tone": "direct, critical, practical, no fluff",
+    "default_goal": "maximize probability of interview and career ROI, not application volume",
+    "final_verdicts": ["GREEN", "YELLOW", "ORANGE", "RED"]
+  }
+}

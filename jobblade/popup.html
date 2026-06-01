@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JobBlade</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="header">
+      <div class="eyebrow">Local vacancy evaluator</div>
+      <h1>JobBlade</h1>
+      <p class="subtitle">Select vacancy text on a page, then score it against Ernesto’s profile using local Ollama.</p>
+    </header>
+
+    <label for="resumeSelect">Resume profile</label>
+    <select id="resumeSelect">
+      <option value="business_analyst.md">Business Analyst</option>
+      <option value="data_analyst.md">Data Analyst</option>
+      <option value="bi_analyst.md">BI Analyst</option>
+    </select>
+
+    <label for="modelInput">Ollama model</label>
+    <input id="modelInput" value="llama3.1:latest" />
+
+    <button id="analyzeBtn">Analyze selected vacancy</button>
+
+    <div id="status" aria-live="polite"></div>
+    <pre id="result"></pre>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

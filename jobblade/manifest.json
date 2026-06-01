@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "JobBlade",
+  "version": "0.1.0",
+  "description": "Analyze job vacancies locally with Ollama using Ernesto's job-search rules.",
+  "permissions": ["activeTab", "tabs", "scripting"],
+  "host_permissions": [
+    "http://localhost:11434/*",
+    "http://127.0.0.1:11434/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "JobBlade"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["panel.html", "panel.css", "panel.js", "data/*", "data/resumes/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
